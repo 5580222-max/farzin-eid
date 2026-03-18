@@ -324,7 +324,6 @@
             }
         }
 
-        /* LOVE LETTER SECTION - HIDDEN UNTIL EID */
         .love-letter-section {
             position: relative;
             z-index: 10;
@@ -611,8 +610,45 @@
         .product-desc {
             font-size: 0.95rem;
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.6;
+        }
+
+        /* CURIOSITY LEVEL BADGE */
+        .curiosity-level {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px 12px;
+            background: linear-gradient(135deg, rgba(255, 182, 217, 0.1), rgba(214, 205, 234, 0.1));
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #7F4A88;
+            border: 1px solid rgba(212, 134, 138, 0.2);
+        }
+
+        .curiosity-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .curiosity-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(212, 134, 138, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-left: 10px;
+        }
+
+        .curiosity-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #D4868A, #FFB6D9);
+            border-radius: 3px;
+            transition: width 0.6s ease;
         }
 
         .add-to-cart-btn {
@@ -971,6 +1007,17 @@
                 height: 50px;
                 font-size: 1.1rem;
             }
+
+            .curiosity-level {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .curiosity-bar {
+                width: 100%;
+                margin-left: 0;
+            }
         }
     </style>
 </head>
@@ -988,7 +1035,6 @@
             <p>A moment to celebrate you, always</p>
         </div>
 
-        <!-- COUNTDOWN WITH TIMER MUSIC -->
         <div class="box">
             <h3>✨ Eid is Coming ✨</h3>
             <div class="grid">
@@ -1011,7 +1057,6 @@
             </div>
         </div>
 
-        <!-- MESSAGE WITH AUTO-LOOPING MUSIC -->
         <div class="box">
             <p class="lock-text" id="lock">🔐 Your message unlocks when Eid arrives</p>
             <button id="btn" class="disabled" style="display: none;">💌 Open Your Message</button>
@@ -1025,7 +1070,6 @@
         </div>
     </div>
 
-    <!-- LOVE LETTER - HIDDEN UNTIL EID -->
     <div class="love-letter-section" id="letterSection">
         <div class="love-letter-box">
             <h2>💌 A Letter for You 💌</h2>
@@ -1081,6 +1125,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         </div>
 
         <div class="products-grid">
+            <!-- PRODUCT 1 -->
             <div class="product-card">
                 <div class="product-image">
                     <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img1.jpg" alt="Our Memories">
@@ -1088,10 +1133,20 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 <div class="product-info">
                     <div class="product-title">Our Memories 📸</div>
                     <p class="product-desc">Every moment with you is a treasure I hold dear in my heart forever.</p>
+                    
+                    <!-- CURIOSITY LEVEL -->
+                    <div class="curiosity-level">
+                        <div class="curiosity-label">🔥 Curiosity</div>
+                        <div class="curiosity-bar">
+                            <div class="curiosity-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+
                     <button class="add-to-cart-btn" onclick="addToCart(1, 'Our Memories 📸')">Add to Cart ❤️</button>
                 </div>
             </div>
 
+            <!-- PRODUCT 2 -->
             <div class="product-card">
                 <div class="product-image">
                     <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img2.jpg" alt="Your Smile">
@@ -1099,10 +1154,20 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 <div class="product-info">
                     <div class="product-title">Your Smile 😊</div>
                     <p class="product-desc">The most beautiful thing I see every day—your warm, genuine smile that lights me up.</p>
+                    
+                    <!-- CURIOSITY LEVEL -->
+                    <div class="curiosity-level">
+                        <div class="curiosity-label">🔥 Curiosity</div>
+                        <div class="curiosity-bar">
+                            <div class="curiosity-fill" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
                     <button class="add-to-cart-btn" onclick="addToCart(2, 'Your Smile 😊')">Add to Cart ❤️</button>
                 </div>
             </div>
 
+            <!-- PRODUCT 3 -->
             <div class="product-card">
                 <div class="product-image">
                     <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img3.jpg" alt="Late Night Talks">
@@ -1110,10 +1175,20 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 <div class="product-info">
                     <div class="product-title">Late Night Talks 🌙</div>
                     <p class="product-desc">Our conversations that go on till dawn—sharing dreams, secrets, and endless laughter.</p>
+                    
+                    <!-- CURIOSITY LEVEL -->
+                    <div class="curiosity-level">
+                        <div class="curiosity-label">🔥 Curiosity</div>
+                        <div class="curiosity-bar">
+                            <div class="curiosity-fill" style="width: 95%;"></div>
+                        </div>
+                    </div>
+
                     <button class="add-to-cart-btn" onclick="addToCart(3, 'Late Night Talks 🌙')">Add to Cart ❤️</button>
                 </div>
             </div>
 
+            <!-- PRODUCT 4 -->
             <div class="product-card">
                 <div class="product-image">
                     <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img4.jpg" alt="My Heart">
@@ -1121,6 +1196,15 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 <div class="product-info">
                     <div class="product-title">My Heart ❤️</div>
                     <p class="product-desc">Completely and unconditionally yours—my heart beats for you every single moment.</p>
+                    
+                    <!-- CURIOSITY LEVEL -->
+                    <div class="curiosity-level">
+                        <div class="curiosity-label">🔥 Curiosity</div>
+                        <div class="curiosity-bar">
+                            <div class="curiosity-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
                     <button class="add-to-cart-btn" onclick="addToCart(4, 'My Heart ❤️')">Add to Cart ❤️</button>
                 </div>
             </div>
@@ -1149,18 +1233,14 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         </div>
     </div>
 
-    <!-- AUDIO FILES WITH GITHUB RAW URLS -->
-    <!-- TIMER PAGE MUSIC - AUTO PLAYS ON LOOP -->
     <audio id="timerMusic" crossorigin="anonymous" preload="auto" autoplay loop>
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/timer.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- MESSAGE PAGE MUSIC - AUTO PLAYS ON LOOP WHEN MESSAGE OPENS ON EID -->
     <audio id="messageMusic" crossorigin="anonymous" preload="auto" loop>
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/message.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- CART SOUNDS -->
     <audio id="addSound">
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/add.mp3" type="audio/mpeg">
     </audio>
@@ -1177,19 +1257,15 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         const timerMusic = document.getElementById('timerMusic');
         let messageMusicPlaying = false;
 
-        // ========== AUTO-PLAY TIMER MUSIC ==========
         window.addEventListener('load', () => {
             timerMusic.volume = 0.5;
             timerMusic.play().catch(err => {
-                console.log('Timer music autoplay blocked:', err.message);
-                // Retry on user interaction
                 document.addEventListener('click', () => {
                     timerMusic.play().catch(e => console.log('Timer music error:', e));
                 }, { once: true });
             });
         });
 
-        // ========== MUSIC CONTROL BUTTON ==========
         musicControl.addEventListener('click', function() {
             if (messageMusicPlaying) {
                 messageMusic.pause();
@@ -1205,7 +1281,6 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             }
         });
 
-        // ========== LETTER MODAL FUNCTIONS ==========
         function openLetter() {
             document.getElementById('letterModal').classList.add('show');
         }
@@ -1218,7 +1293,6 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             if (e.target === this) closeLetter();
         });
 
-        // ========== CART SYSTEM ==========
         let cart = [];
 
         function addToCart(id, name) {
@@ -1295,7 +1369,6 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             });
         });
 
-        // ========== FLOATING HEARTS ==========
         function generateHearts() {
             const particlesContainer = document.getElementById('particles');
             const heartCount = 20;
@@ -1313,7 +1386,6 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             }
         }
 
-        // ========== COUNTDOWN TIMER ==========
         function startCountdown() {
             const eidDate = new Date('2026-03-20T00:00:00').getTime();
 
@@ -1333,17 +1405,14 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                     btn.classList.remove('disabled');
                     document.querySelectorAll('.box h3')[0].innerHTML = '🌙 Eid Mubarak, Farzin! 🌙';
                     
-                    // SHOW LOVE LETTER ON EID
                     document.getElementById('letterSection').classList.add('show');
                     
-                    // AUTO-PLAY MESSAGE MUSIC ON EID
                     messageMusic.volume = 0.7;
                     messageMusic.play().catch(err => console.log('Message music error:', err));
                     musicControl.classList.add('playing');
                     musicControl.textContent = '⏸️';
                     messageMusicPlaying = true;
                     
-                    // AUTO-SHOW MESSAGE
                     document.getElementById('msg').classList.add('show');
                     
                     return;
@@ -1361,7 +1430,6 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             }, 1000);
         }
 
-        // ========== MESSAGE BUTTON CLICK ==========
         document.getElementById('btn').addEventListener('click', function() {
             const msgContent = document.getElementById('msg');
             const isShown = msgContent.classList.contains('show');
@@ -1386,10 +1454,9 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             }
         });
 
-        // ========== INITIALIZE ==========
         generateHearts();
         startCountdown();
-        console.log('✅ Website ready! Timer music auto-playing. Letter hidden until Eid.');
+        console.log('✅ Website ready! Curiosity levels added to products.');
     </script>
 </body>
 </html>
