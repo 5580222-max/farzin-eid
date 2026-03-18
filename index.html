@@ -1124,13 +1124,12 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         </div>
 
         <div class="products-grid">
-            <!-- PRODUCT 1 -->
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img1.jpg" alt="Whispered Promises">
+                    <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img1.jpg" alt="Product 1">
                 </div>
                 <div class="product-info">
-                    <div class="product-title">Whispered Promises 🤫</div>
+                    <div class="product-title">Loading...</div>
                     <p class="product-desc">The secrets we tell each other under starlight, promises only meant for you.</p>
                     
                     <div class="curiosity-level">
@@ -1140,17 +1139,16 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                         </div>
                     </div>
 
-                    <button class="add-to-cart-btn" onclick="addToCart(1, 'Whispered Promises 🤫')">Add to Cart ❤️</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(1, 'Product 1')">Add to Cart ❤️</button>
                 </div>
             </div>
 
-            <!-- PRODUCT 2 -->
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img2.jpg" alt="Tangled Souls">
+                    <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img2.jpg" alt="Product 2">
                 </div>
                 <div class="product-info">
-                    <div class="product-title">Tangled Souls 🌀</div>
+                    <div class="product-title">Loading...</div>
                     <p class="product-desc">Our hearts are intertwined, our souls connected in ways words could never explain.</p>
                     
                     <div class="curiosity-level">
@@ -1160,17 +1158,16 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                         </div>
                     </div>
 
-                    <button class="add-to-cart-btn" onclick="addToCart(2, 'Tangled Souls 🌀')">Add to Cart ❤️</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(2, 'Product 2')">Add to Cart ❤️</button>
                 </div>
             </div>
 
-            <!-- PRODUCT 3 -->
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img3.jpg" alt="Gravity Pull">
+                    <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img3.jpg" alt="Product 3">
                 </div>
                 <div class="product-info">
-                    <div class="product-title">Gravity Pull 🌌</div>
+                    <div class="product-title">Loading...</div>
                     <p class="product-desc">You're my gravity—the force that keeps me grounded, keeps me whole, keeps me sane.</p>
                     
                     <div class="curiosity-level">
@@ -1180,17 +1177,16 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                         </div>
                     </div>
 
-                    <button class="add-to-cart-btn" onclick="addToCart(3, 'Gravity Pull 🌌')">Add to Cart ❤️</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(3, 'Product 3')">Add to Cart ❤️</button>
                 </div>
             </div>
 
-            <!-- PRODUCT 4 -->
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img4.jpg" alt="Infinite Loop">
+                    <img src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/img4.jpg" alt="Product 4">
                 </div>
                 <div class="product-info">
-                    <div class="product-title">Infinite Loop ♾️</div>
+                    <div class="product-title">Loading...</div>
                     <p class="product-desc">With you, I found my forever—an endless circle of love that never breaks, never bends.</p>
                     
                     <div class="curiosity-level">
@@ -1200,7 +1196,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                         </div>
                     </div>
 
-                    <button class="add-to-cart-btn" onclick="addToCart(4, 'Infinite Loop ♾️')">Add to Cart ❤️</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(4, 'Product 4')">Add to Cart ❤️</button>
                 </div>
             </div>
         </div>
@@ -1247,12 +1243,46 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
     </audio>
 
     <script>
+        // RANDOM PRODUCT TITLES SHUFFLE
+        const randomTitles = [
+            "THIS??",
+            "OR MAYBE THIS??",
+            "I THINK THIS!!",
+            "ALSO THIS💕🤍"
+        ];
+
+        function shuffleTitles() {
+            const titles = document.querySelectorAll('.product-title');
+            let shuffled = [...randomTitles].sort(() => 0.5 - Math.random());
+
+            titles.forEach((title, index) => {
+                title.textContent = shuffled[index % shuffled.length];
+            });
+        }
+
+        // Update cart button names with shuffled titles
+        function updateCartButtonNames() {
+            const buttons = document.querySelectorAll('.add-to-cart-btn');
+            const titles = document.querySelectorAll('.product-title');
+
+            buttons.forEach((btn, index) => {
+                const titleText = titles[index].textContent;
+                btn.onclick = function() {
+                    addToCart(index + 1, titleText);
+                };
+            });
+        }
+
+        // MUSIC CONTROL
         const musicControl = document.getElementById('musicControl');
         const messageMusic = document.getElementById('messageMusic');
         const timerMusic = document.getElementById('timerMusic');
         let messageMusicPlaying = false;
 
         window.addEventListener('load', () => {
+            shuffleTitles();
+            updateCartButtonNames();
+            
             timerMusic.volume = 0.5;
             timerMusic.play().catch(err => {
                 document.addEventListener('click', () => {
@@ -1451,7 +1481,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
 
         generateHearts();
         startCountdown();
-        console.log('✅ Website ready! All features activated.');
+        console.log('✅ Website ready! Product titles are randomly shuffled!');
     </script>
 </body>
 </html>
