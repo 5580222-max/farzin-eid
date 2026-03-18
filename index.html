@@ -324,6 +324,7 @@
             }
         }
 
+        /* LOVE LETTER SECTION - HIDDEN UNTIL EID */
         .love-letter-section {
             position: relative;
             z-index: 10;
@@ -332,6 +333,14 @@
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
             border-top: 2px solid rgba(212, 134, 138, 0.2);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .love-letter-section.show {
+            display: block;
+            opacity: 1;
         }
 
         .love-letter-box {
@@ -970,7 +979,7 @@
     <div class="glow-orb orb2"></div>
     <div class="particles" id="particles"></div>
 
-    <button class="music-control" id="musicControl" title="🎵 Click to play music">🎵</button>
+    <button class="music-control" id="musicControl" title="🎵 Pause Music">🎵</button>
     <div class="cart-badge" id="cartBadge">0 💕</div>
 
     <div class="container">
@@ -979,6 +988,7 @@
             <p>A moment to celebrate you, always</p>
         </div>
 
+        <!-- COUNTDOWN WITH TIMER MUSIC -->
         <div class="box">
             <h3>✨ Eid is Coming ✨</h3>
             <div class="grid">
@@ -1001,6 +1011,7 @@
             </div>
         </div>
 
+        <!-- MESSAGE WITH AUTO-LOOPING MUSIC -->
         <div class="box">
             <p class="lock-text" id="lock">🔐 Your message unlocks when Eid arrives</p>
             <button id="btn" class="disabled" style="display: none;">💌 Open Your Message</button>
@@ -1014,7 +1025,8 @@
         </div>
     </div>
 
-    <div class="love-letter-section">
+    <!-- LOVE LETTER - HIDDEN UNTIL EID -->
+    <div class="love-letter-section" id="letterSection">
         <div class="love-letter-box">
             <h2>💌 A Letter for You 💌</h2>
             <p class="love-letter-preview">A heartfelt message written just for you, Farzin...</p>
@@ -1137,10 +1149,18 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         </div>
     </div>
 
-    <!-- AUDIO WITH GITHUB RAW URLS -->
-    <audio id="messageMusic" crossorigin="anonymous" preload="auto">
+    <!-- AUDIO FILES WITH GITHUB RAW URLS -->
+    <!-- TIMER PAGE MUSIC - AUTO PLAYS ON LOOP -->
+    <audio id="timerMusic" crossorigin="anonymous" preload="auto" autoplay loop>
+        <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/timer.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- MESSAGE PAGE MUSIC - AUTO PLAYS ON LOOP WHEN MESSAGE OPENS ON EID -->
+    <audio id="messageMusic" crossorigin="anonymous" preload="auto" loop>
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/message.mp3" type="audio/mpeg">
     </audio>
+
+    <!-- CART SOUNDS -->
     <audio id="addSound">
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/add.mp3" type="audio/mpeg">
     </audio>
@@ -1154,51 +1174,38 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
     <script>
         const musicControl = document.getElementById('musicControl');
         const messageMusic = document.getElementById('messageMusic');
-        let isMusicPlaying = false;
+        const timerMusic = document.getElementById('timerMusic');
+        let messageMusicPlaying = false;
 
-        function playMusicTrack() {
-            messageMusic.volume = 0.7;
-            messageMusic.loop = true;
-            
-            const playPromise = messageMusic.play();
-            
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        console.log('✅ Music playing!');
-                        musicControl.classList.add('playing');
-                        musicControl.textContent = '⏸️';
-                        isMusicPlaying = true;
-                    })
-                    .catch(error => {
-                        console.error('Play error:', error.name, error.message);
-                    });
-            }
-        }
+        // ========== AUTO-PLAY TIMER MUSIC ==========
+        window.addEventListener('load', () => {
+            timerMusic.volume = 0.5;
+            timerMusic.play().catch(err => {
+                console.log('Timer music autoplay blocked:', err.message);
+                // Retry on user interaction
+                document.addEventListener('click', () => {
+                    timerMusic.play().catch(e => console.log('Timer music error:', e));
+                }, { once: true });
+            });
+        });
 
-        function pauseMusicTrack() {
-            messageMusic.pause();
-            messageMusic.currentTime = 0;
-            musicControl.classList.remove('playing');
-            musicControl.textContent = '🎵';
-            isMusicPlaying = false;
-        }
-
+        // ========== MUSIC CONTROL BUTTON ==========
         musicControl.addEventListener('click', function() {
-            if (isMusicPlaying) {
-                pauseMusicTrack();
+            if (messageMusicPlaying) {
+                messageMusic.pause();
+                musicControl.classList.remove('playing');
+                musicControl.textContent = '🎵';
+                messageMusicPlaying = false;
             } else {
-                playMusicTrack();
+                messageMusic.volume = 0.7;
+                messageMusic.play();
+                musicControl.classList.add('playing');
+                musicControl.textContent = '⏸️';
+                messageMusicPlaying = true;
             }
         });
 
-        document.addEventListener('click', () => {
-            const audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
-            if (audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
-        }, { once: true });
-
+        // ========== LETTER MODAL FUNCTIONS ==========
         function openLetter() {
             document.getElementById('letterModal').classList.add('show');
         }
@@ -1211,6 +1218,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             if (e.target === this) closeLetter();
         });
 
+        // ========== CART SYSTEM ==========
         let cart = [];
 
         function addToCart(id, name) {
@@ -1287,6 +1295,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             });
         });
 
+        // ========== FLOATING HEARTS ==========
         function generateHearts() {
             const particlesContainer = document.getElementById('particles');
             const heartCount = 20;
@@ -1304,6 +1313,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             }
         }
 
+        // ========== COUNTDOWN TIMER ==========
         function startCountdown() {
             const eidDate = new Date('2026-03-20T00:00:00').getTime();
 
@@ -1322,6 +1332,20 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                     btn.style.display = 'inline-block';
                     btn.classList.remove('disabled');
                     document.querySelectorAll('.box h3')[0].innerHTML = '🌙 Eid Mubarak, Farzin! 🌙';
+                    
+                    // SHOW LOVE LETTER ON EID
+                    document.getElementById('letterSection').classList.add('show');
+                    
+                    // AUTO-PLAY MESSAGE MUSIC ON EID
+                    messageMusic.volume = 0.7;
+                    messageMusic.play().catch(err => console.log('Message music error:', err));
+                    musicControl.classList.add('playing');
+                    musicControl.textContent = '⏸️';
+                    messageMusicPlaying = true;
+                    
+                    // AUTO-SHOW MESSAGE
+                    document.getElementById('msg').classList.add('show');
+                    
                     return;
                 }
 
@@ -1337,6 +1361,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             }, 1000);
         }
 
+        // ========== MESSAGE BUTTON CLICK ==========
         document.getElementById('btn').addEventListener('click', function() {
             const msgContent = document.getElementById('msg');
             const isShown = msgContent.classList.contains('show');
@@ -1344,19 +1369,27 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             if (!isShown) {
                 msgContent.classList.add('show');
                 this.textContent = '💌 Close Message';
-                if (!isMusicPlaying) {
-                    playMusicTrack();
+                if (!messageMusicPlaying) {
+                    messageMusic.volume = 0.7;
+                    messageMusic.play();
+                    musicControl.classList.add('playing');
+                    musicControl.textContent = '⏸️';
+                    messageMusicPlaying = true;
                 }
             } else {
                 msgContent.classList.remove('show');
                 this.textContent = '💌 Open Your Message';
-                pauseMusicTrack();
+                messageMusic.pause();
+                musicControl.classList.remove('playing');
+                musicControl.textContent = '🎵';
+                messageMusicPlaying = false;
             }
         });
 
+        // ========== INITIALIZE ==========
         generateHearts();
         startCountdown();
-        console.log('✅ Website ready! Music will play when message opens on Eid.');
+        console.log('✅ Website ready! Timer music auto-playing. Letter hidden until Eid.');
     </script>
 </body>
 </html>
