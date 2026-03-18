@@ -333,6 +333,26 @@
             }
         }
 
+        /* Audio Status Indicator */
+        .audio-status {
+            position: fixed;
+            bottom: 100px;
+            left: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            max-width: 150px;
+            display: none;
+            z-index: 99;
+            word-wrap: break-word;
+        }
+
+        .audio-status.show {
+            display: block;
+        }
+
         /* Special Love Letter Section */
         .love-letter-section {
             position: relative;
@@ -981,6 +1001,11 @@
                 height: 50px;
                 font-size: 1.1rem;
             }
+
+            .audio-status {
+                bottom: 90px;
+                left: 20px;
+            }
         }
     </style>
 </head>
@@ -991,6 +1016,9 @@
 
     <!-- Floating hearts -->
     <div class="particles" id="particles"></div>
+
+    <!-- Audio Status Indicator -->
+    <div class="audio-status" id="audioStatus"></div>
 
     <!-- Music Control Button -->
     <button class="music-control" id="musicControl" title="🎵 Click to play music">🎵</button>
@@ -1176,7 +1204,7 @@ BYE BYE TAKLI😌❤️🤍💕.
         </div>
     </div>
 
-    <!-- Audio Elements - WITH WEB AUDIO API FALLBACK -->
+    <!-- Audio Elements -->
     <audio id="messageMusic" crossorigin="anonymous" preload="auto">
         <source src="message.mp3" type="audio/mpeg">
     </audio>
@@ -1191,72 +1219,89 @@ BYE BYE TAKLI😌❤️🤍💕.
     </audio>
 
     <script>
-        // ========== IMPROVED MUSIC SYSTEM ==========
+        // ========== AUDIO SYSTEM WITH DEBUGGING ==========
         const musicControl = document.getElementById('musicControl');
         const messageMusic = document.getElementById('messageMusic');
+        const audioStatus = document.getElementById('audioStatus');
         let isMusicPlaying = false;
-        let audioContext = null;
 
-        // Initialize AudioContext on user interaction
-        function initAudioContext() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                console.log('AudioContext initialized');
-            }
-        }
-
-        // Resume AudioContext if suspended
-        function resumeAudioContext() {
-            if (audioContext && audioContext.state === 'suspended') {
-                audioContext.resume().then(() => {
-                    console.log('AudioContext resumed');
-                });
-            }
-        }
-
-        // Enhanced play function
-        function playMusicTrack() {
-            initAudioContext();
-            resumeAudioContext();
+        function showStatus(message, duration = 3000) {
+            audioStatus.textContent = message;
+            audioStatus.classList.add('show');
+            console.log('📌 Status:', message);
             
+            setTimeout(() => {
+                audioStatus.classList.remove('show');
+            }, duration);
+        }
+
+        // Check audio file on load
+        window.addEventListener('load', () => {
+            console.log('🎵 Page loaded - checking audio file...');
+            
+            messageMusic.addEventListener('canplaythrough', () => {
+                console.log('✅ Audio file loaded successfully!');
+                showStatus('✅ Music Ready');
+            }, { once: true });
+
+            messageMusic.addEventListener('error', (e) => {
+                console.error('❌ Audio file error:', e);
+                showStatus('❌ File Error', 5000);
+            });
+
+            // Check if file exists
+            fetch('message.mp3', { method: 'HEAD' })
+                .then(res => {
+                    if (res.ok) {
+                        console.log('✅ message.mp3 file exists');
+                    } else {
+                        console.error('❌ message.mp3 not found (404)');
+                        showStatus('❌ File not found', 5000);
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ Cannot check file:', err.message);
+                });
+        });
+
+        // Play function
+        function playMusicTrack() {
+            console.log('▶️ Play requested...');
             messageMusic.volume = 0.7;
             messageMusic.loop = true;
             
             const playPromise = messageMusic.play();
             
             if (playPromise !== undefined) {
-                return playPromise
+                playPromise
                     .then(() => {
-                        console.log('✅ Music playing successfully!');
+                        console.log('✅ MUSIC PLAYING!');
                         musicControl.classList.add('playing');
                         musicControl.textContent = '⏸️';
                         isMusicPlaying = true;
-                        return true;
+                        showStatus('♪ Now Playing');
                     })
                     .catch(error => {
-                        console.error('❌ Play error:', error.name, error.message);
-                        // Try alternative method
-                        setTimeout(() => {
-                            messageMusic.play().catch(e => console.error('Retry failed:', e));
-                        }, 100);
-                        return false;
+                        console.error('❌ Play failed:', error.name, '-', error.message);
+                        showStatus(`❌ ${error.name}`, 5000);
                     });
             }
         }
 
-        // Enhanced pause function
+        // Pause function
         function pauseMusicTrack() {
+            console.log('⏸️ Pause requested...');
             messageMusic.pause();
             messageMusic.currentTime = 0;
             musicControl.classList.remove('playing');
             musicControl.textContent = '🎵';
             isMusicPlaying = false;
-            console.log('Music paused');
+            showStatus('⏸️ Paused');
         }
 
-        // Music button click handler
+        // Button click
         musicControl.addEventListener('click', function() {
-            console.log('🎵 Music button clicked');
+            console.log('🎵 Button clicked');
             
             if (isMusicPlaying) {
                 pauseMusicTrack();
@@ -1265,10 +1310,14 @@ BYE BYE TAKLI😌❤️🤍💕.
             }
         });
 
-        // Resume AudioContext on any user interaction
-        document.addEventListener('click', initAudioContext);
-        document.addEventListener('touchstart', initAudioContext);
-        document.addEventListener('keydown', initAudioContext);
+        // Resume AudioContext on interaction
+        document.addEventListener('click', () => {
+            const audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+                console.log('🔊 AudioContext resumed');
+            }
+        }, { once: true });
 
         // ========== LETTER MODAL ==========
         function openLetter() {
@@ -1280,9 +1329,7 @@ BYE BYE TAKLI😌❤️🤍💕.
         }
 
         document.getElementById('letterModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeLetter();
-            }
+            if (e.target === this) closeLetter();
         });
 
         // ========== CART SYSTEM ==========
@@ -1351,8 +1398,6 @@ BYE BYE TAKLI😌❤️🤍💕.
         function playSound(id) {
             const audio = document.getElementById(id);
             if (audio) {
-                initAudioContext();
-                resumeAudioContext();
                 audio.currentTime = 0;
                 audio.play().catch(e => console.log('Sound error:', e.name));
             }
@@ -1423,11 +1468,8 @@ BYE BYE TAKLI😌❤️🤍💕.
                 msgContent.classList.add('show');
                 this.textContent = '💌 Close Message';
                 if (!isMusicPlaying) {
-                    playMusicTrack().then(success => {
-                        if (success) {
-                            console.log('🎵 Eid message opened - music started!');
-                        }
-                    });
+                    console.log('🎵 Eid message opened - starting music auto-play...');
+                    playMusicTrack();
                 }
             } else {
                 msgContent.classList.remove('show');
@@ -1439,7 +1481,8 @@ BYE BYE TAKLI😌❤️🤍💕.
         // Initialize
         generateHearts();
         startCountdown();
-        console.log('✅ Website ready! Click 🎵 to test music, or wait for Eid to auto-play.');
+        showStatus('🎵 Click button to test', 2000);
+        console.log('✅ Website initialized - Check console for debug messages!');
     </script>
 </body>
 </html>
