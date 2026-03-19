@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>For Farzin ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
@@ -19,6 +19,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #FDF6F0 0%, #F9E8C9 25%, #E8D9E6 50%, #D6CDEA 75%, #F0E6F6 100%);
+            background-attachment: fixed;
             min-height: 100vh;
             overflow-x: hidden;
             color: #4a4a4a;
@@ -45,15 +46,9 @@
                 transform: translateY(100vh) translateX(0) scale(1) rotate(0deg);
                 opacity: 0;
             }
-            10% {
-                opacity: 0.4;
-            }
-            50% {
-                opacity: 0.3;
-            }
-            90% {
-                opacity: 0.3;
-            }
+            10% { opacity: 0.4; }
+            50% { opacity: 0.3; }
+            90% { opacity: 0.3; }
             100% {
                 transform: translateY(-100vh) translateX(100px) scale(0.5) rotate(360deg);
                 opacity: 0;
@@ -86,12 +81,8 @@
         }
 
         @keyframes drift {
-            0%, 100% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(30px, -30px);
-            }
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
         }
 
         .container {
@@ -101,28 +92,29 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 60px;
-            padding: 40px 20px;
+            gap: 30px;
+            padding: 20px;
             min-height: 100vh;
         }
 
         .header {
             text-align: center;
             animation: fadeInDown 1s ease-out;
+            margin-top: 20px;
         }
 
         .header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 8vw, 3.5rem);
             color: #6B4C9A;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: 700;
             letter-spacing: 1px;
         }
 
         .header p {
             color: #7F4A88;
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 4vw, 1.1rem);
             font-weight: 300;
             letter-spacing: 0.5px;
         }
@@ -131,22 +123,17 @@
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px);
             border: 2px solid rgba(212, 134, 138, 0.2);
-            border-radius: 30px;
-            padding: 50px 40px;
-            min-width: 320px;
+            border-radius: 20px;
+            padding: clamp(20px, 5vw, 50px);
+            width: 100%;
             max-width: 550px;
             box-shadow: 0 20px 60px rgba(212, 134, 138, 0.15);
             animation: slideUp 1s ease-out;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .box:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .box:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .box:nth-child(2) { animation-delay: 0.2s; }
+        .box:nth-child(3) { animation-delay: 0.4s; }
 
         .box:hover {
             transform: translateY(-5px);
@@ -156,44 +143,45 @@
 
         .box h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
             color: #6B4C9A;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: 700;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin: 30px 0;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
         }
 
         .grid-item {
-            padding: 25px 15px;
+            padding: 15px 10px;
             background: linear-gradient(135deg, rgba(255, 182, 217, 0.1), rgba(214, 205, 234, 0.1));
             border: 2px solid rgba(212, 134, 138, 0.15);
-            border-radius: 18px;
+            border-radius: 15px;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .grid-item:hover {
             background: linear-gradient(135deg, rgba(255, 182, 217, 0.2), rgba(214, 205, 234, 0.2));
             border-color: rgba(212, 134, 138, 0.4);
-            transform: translateY(-5px);
+            transform: translateY(-3px);
         }
 
         .num {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 700;
             color: #6B4C9A;
             display: block;
             line-height: 1;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .label {
-            font-size: 0.85rem;
+            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
             color: #7F4A88;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -201,19 +189,20 @@
         }
 
         button {
-            margin-top: 25px;
-            padding: 16px 40px;
+            padding: clamp(12px, 3vw, 16px) clamp(25px, 5vw, 40px);
             border: none;
             border-radius: 50px;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
             color: white;
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: clamp(0.9rem, 3vw, 1.05rem);
             cursor: pointer;
             box-shadow: 0 10px 30px rgba(212, 134, 138, 0.4);
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
+            margin-top: 15px;
+            touch-action: manipulation;
         }
 
         button:hover:not(.disabled) {
@@ -231,20 +220,21 @@
         }
 
         .lock-text {
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
             color: #7F4A88;
             font-weight: 500;
+            text-align: center;
         }
 
         .msg {
-            margin-top: 30px;
+            margin-top: 20px;
             opacity: 0;
             max-height: 0;
             overflow: hidden;
             transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            line-height: 2;
+            line-height: 1.8;
             font-family: 'Inter', sans-serif;
-            font-size: 1.15rem;
+            font-size: clamp(0.95rem, 3vw, 1.15rem);
             color: #4a4a4a;
             font-weight: 400;
         }
@@ -255,7 +245,7 @@
         }
 
         .msg-line {
-            margin: 15px 0;
+            margin: 12px 0;
             animation: typewriter 0.6s ease-out forwards;
         }
 
@@ -271,8 +261,8 @@
         }
 
         .msg-sign {
-            margin-top: 20px;
-            font-size: 1rem;
+            margin-top: 15px;
+            font-size: clamp(0.85rem, 3vw, 1rem);
             color: #6B4C9A;
             font-style: italic;
             font-weight: 300;
@@ -280,24 +270,25 @@
 
         .music-control {
             position: fixed;
-            bottom: 30px;
-            left: 30px;
+            bottom: 20px;
+            left: 20px;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
             color: white;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             box-shadow: 0 10px 30px rgba(212, 134, 138, 0.4);
             z-index: 100;
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
             padding: 0;
+            touch-action: manipulation;
         }
 
         .music-control:hover {
@@ -310,19 +301,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 10px 30px rgba(212, 134, 138, 0.4);
-            }
-            50% {
-                box-shadow: 0 10px 50px rgba(212, 134, 138, 0.8);
-            }
+            0%, 100% { box-shadow: 0 10px 30px rgba(212, 134, 138, 0.4); }
+            50% { box-shadow: 0 10px 50px rgba(212, 134, 138, 0.8); }
         }
 
         .love-letter-section {
             position: relative;
             z-index: 10;
             width: 100%;
-            padding: 60px 20px;
+            padding: 30px 20px;
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
             border-top: 2px solid rgba(212, 134, 138, 0.2);
@@ -340,8 +327,8 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             border: 2px solid rgba(212, 134, 138, 0.3);
-            border-radius: 30px;
-            padding: 50px 40px;
+            border-radius: 20px;
+            padding: clamp(20px, 5vw, 50px);
             max-width: 700px;
             margin: 0 auto;
             box-shadow: 0 20px 60px rgba(212, 134, 138, 0.2);
@@ -350,34 +337,33 @@
 
         .love-letter-box h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
             color: #6B4C9A;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: 700;
         }
 
         .love-letter-preview {
             font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
             line-height: 1.6;
-            color: #4a4a4a;
-            text-align: center;
-            margin-bottom: 25px;
-            font-style: italic;
             color: #7F4A88;
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
         .read-letter-btn {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
             color: white;
             border: none;
             border-radius: 50px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 3vw, 1rem);
             box-shadow: 0 8px 20px rgba(212, 134, 138, 0.3);
             transition: all 0.3s ease;
         }
@@ -408,8 +394,8 @@
 
         .letter-modal-content {
             background: linear-gradient(135deg, #FDF6F0, #F0E6F6);
-            padding: 50px;
-            border-radius: 30px;
+            padding: clamp(20px, 5vw, 50px);
+            border-radius: 20px;
             text-align: center;
             max-width: 650px;
             width: 100%;
@@ -432,33 +418,33 @@
 
         .letter-modal-content h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
             color: #6B4C9A;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-weight: 700;
         }
 
         .full-letter-content {
             font-family: 'Inter', sans-serif;
-            font-size: 1.05rem;
-            line-height: 2;
+            font-size: clamp(0.9rem, 3vw, 1.05rem);
+            line-height: 1.8;
             color: #4a4a4a;
             white-space: pre-wrap;
             word-wrap: break-word;
             letter-spacing: 0.5px;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .close-letter-btn {
-            padding: 12px 35px;
+            padding: 12px 30px;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
             color: white;
             border: none;
             border-radius: 50px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 3vw, 1rem);
             box-shadow: 0 8px 20px rgba(212, 134, 138, 0.3);
             transition: all 0.3s ease;
         }
@@ -472,7 +458,7 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            padding: 60px 20px;
+            padding: 30px 20px;
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
             border-top: 2px solid rgba(212, 134, 138, 0.2);
@@ -480,58 +466,52 @@
 
         .store-header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             animation: fadeInDown 1s ease-out;
         }
 
         .store-header h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
             color: #6B4C9A;
             margin-bottom: 10px;
         }
 
         .store-header p {
             color: #7F4A88;
-            font-size: 1rem;
+            font-size: clamp(0.85rem, 3vw, 1rem);
             font-weight: 300;
         }
 
         .cart-badge {
             position: fixed;
-            top: 30px;
-            right: 30px;
+            top: 20px;
+            right: 20px;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             box-shadow: 0 10px 30px rgba(212, 134, 138, 0.4);
             z-index: 100;
             animation: popIn 0.4s ease-out;
         }
 
         @keyframes popIn {
-            0% {
-                transform: scale(0);
-            }
-            70% {
-                transform: scale(1.15);
-            }
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(0); }
+            70% { transform: scale(1.15); }
+            100% { transform: scale(1); }
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -540,7 +520,7 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             border: 2px solid rgba(212, 134, 138, 0.2);
-            border-radius: 25px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 50px rgba(212, 134, 138, 0.15);
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -553,19 +533,17 @@
         .product-card:nth-child(4) { animation-delay: 0.4s; }
 
         .product-card:hover {
-            transform: translateY(-15px);
+            transform: translateY(-10px);
             box-shadow: 0 30px 80px rgba(212, 134, 138, 0.3);
-            border-color: rgba(212, 134, 138, 0.4);
         }
 
         .product-image {
             width: 100%;
-            height: 250px;
+            height: 200px;
             background: linear-gradient(135deg, rgba(255, 182, 217, 0.2), rgba(214, 205, 234, 0.2));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
             overflow: hidden;
         }
 
@@ -581,63 +559,59 @@
         }
 
         .product-info {
-            padding: 25px;
+            padding: 15px;
         }
 
         .product-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             color: #6B4C9A;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: 700;
         }
 
         .product-desc {
-            font-size: 0.95rem;
+            font-size: clamp(0.8rem, 3vw, 0.95rem);
             color: #666;
-            margin-bottom: 15px;
-            line-height: 1.6;
+            margin-bottom: 12px;
+            line-height: 1.5;
         }
 
         .curiosity-level {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding: 10px 12px;
+            margin-bottom: 12px;
+            padding: 8px 10px;
             background: linear-gradient(135deg, rgba(255, 182, 217, 0.1), rgba(214, 205, 234, 0.1));
-            border-radius: 12px;
-            font-size: 0.85rem;
+            border-radius: 10px;
+            font-size: clamp(0.75rem, 2.5vw, 0.85rem);
             font-weight: 600;
             color: #7F4A88;
-            border: 1px solid rgba(212, 134, 138, 0.2);
         }
 
         .curiosity-label {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
         .curiosity-bar {
             flex: 1;
-            height: 6px;
+            height: 5px;
             background: rgba(212, 134, 138, 0.2);
             border-radius: 3px;
             overflow: hidden;
-            margin-left: 10px;
+            margin-left: 8px;
         }
 
         .curiosity-fill {
             height: 100%;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
-            border-radius: 3px;
-            transition: width 0.6s ease;
         }
 
         .add-to-cart-btn {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
             color: white;
             border: none;
@@ -645,26 +619,21 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1rem;
+            font-size: clamp(0.85rem, 3vw, 1rem);
             box-shadow: 0 8px 20px rgba(212, 134, 138, 0.3);
         }
 
-        .add-to-cart-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(212, 134, 138, 0.5);
-        }
-
         .add-to-cart-btn:active {
-            transform: translateY(-1px);
+            transform: scale(0.98);
         }
 
         .checkout-section {
             text-align: center;
-            margin-top: 50px;
-            padding: 30px;
+            margin-top: 30px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(20px);
-            border-radius: 25px;
+            border-radius: 20px;
             border: 2px solid rgba(212, 134, 138, 0.2);
             max-width: 500px;
             margin-left: auto;
@@ -673,28 +642,32 @@
 
         .checkout-section h3 {
             color: #6B4C9A;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+        }
+
+        .checkout-section p {
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            color: #666;
         }
 
         .checkout-btn {
             width: 100%;
-            padding: 14px;
-            margin-top: 15px;
+            padding: 12px;
+            margin-top: 12px;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
             color: white;
             border: none;
             border-radius: 50px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 1.05rem;
+            font-size: clamp(0.9rem, 3vw, 1.05rem);
             box-shadow: 0 10px 30px rgba(212, 134, 138, 0.4);
             transition: all 0.3s ease;
         }
 
-        .checkout-btn:hover:not(.disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 45px rgba(212, 134, 138, 0.6);
+        .checkout-btn:active:not(.disabled) {
+            transform: scale(0.98);
         }
 
         .checkout-btn.disabled {
@@ -713,6 +686,7 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
         .modal.show {
@@ -721,13 +695,15 @@
 
         .modal-content {
             background: linear-gradient(135deg, #FDF6F0, #F0E6F6);
-            padding: 40px;
-            border-radius: 30px;
+            padding: clamp(20px, 5vw, 40px);
+            border-radius: 20px;
             text-align: center;
             max-width: 450px;
-            width: 90%;
+            width: 100%;
             box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3);
             animation: modalSlideUp 0.5s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes modalSlideUp {
@@ -743,28 +719,28 @@
 
         .modal-content h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
             color: #6B4C9A;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .modal-content p {
             color: #666;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
         }
 
         .voice-input-display {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: 2px solid rgba(212, 134, 138, 0.3);
-            border-radius: 15px;
-            font-size: 1rem;
+            border-radius: 12px;
+            font-size: clamp(0.85rem, 3vw, 1rem);
             font-family: 'Poppins', sans-serif;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             background: rgba(255, 255, 255, 0.5);
             color: #666;
-            min-height: 50px;
+            min-height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -773,22 +749,18 @@
 
         .voice-mic-btn {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: linear-gradient(135deg, #D4868A, #FFB6D9);
             color: white;
             border: none;
             border-radius: 50px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 1rem;
-            margin-bottom: 20px;
+            font-size: clamp(0.85rem, 3vw, 1rem);
+            margin-bottom: 15px;
             box-shadow: 0 8px 20px rgba(212, 134, 138, 0.3);
             transition: all 0.3s ease;
-        }
-
-        .voice-mic-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(212, 134, 138, 0.5);
+            touch-action: manipulation;
         }
 
         .voice-mic-btn.recording {
@@ -797,12 +769,8 @@
         }
 
         @keyframes pulse-record {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .modal-buttons {
@@ -812,12 +780,14 @@
 
         .modal-btn {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border: none;
             border-radius: 50px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: clamp(0.8rem, 3vw, 0.95rem);
+            touch-action: manipulation;
         }
 
         .modal-confirm {
@@ -826,27 +796,19 @@
             box-shadow: 0 8px 20px rgba(212, 134, 138, 0.3);
         }
 
-        .modal-confirm:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(212, 134, 138, 0.5);
-        }
-
         .modal-cancel {
             background: rgba(212, 134, 138, 0.15);
             color: #6B4C9A;
             border: 2px solid rgba(212, 134, 138, 0.3);
         }
 
-        .modal-cancel:hover {
-            background: rgba(212, 134, 138, 0.25);
-        }
-
         .modal-message {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 15px;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
             font-weight: 600;
             display: none;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
         }
 
         .modal-message.success {
@@ -862,13 +824,13 @@
         }
 
         .final-message {
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 15px;
+            padding: 15px;
             background: rgba(255, 182, 217, 0.2);
-            border-radius: 15px;
+            border-radius: 12px;
             color: #6B4C9A;
-            font-size: 0.95rem;
-            line-height: 1.8;
+            font-size: clamp(0.8rem, 3vw, 0.95rem);
+            line-height: 1.6;
             font-style: italic;
             display: none;
         }
@@ -901,140 +863,74 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Tablet and larger screens */
+        @media (min-width: 768px) {
+            .container {
+                gap: 60px;
+                padding: 40px 20px;
             }
-            to {
-                opacity: 1;
+
+            .music-control {
+                width: 60px;
+                height: 60px;
+                bottom: 30px;
+                left: 30px;
+                font-size: 1.3rem;
+            }
+
+            .cart-badge {
+                width: 50px;
+                height: 50px;
+                top: 30px;
+                right: 30px;
+                font-size: 1.2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+            }
+
+            .product-image {
+                height: 250px;
             }
         }
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
+        /* Small phones */
+        @media (max-width: 380px) {
+            .container {
+                gap: 15px;
+                padding: 15px;
             }
 
             .box {
-                padding: 35px 25px;
-                max-width: 90%;
+                border-radius: 15px;
+                padding: 15px;
             }
 
             .grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-
-            .num {
-                font-size: 1.8rem;
+                gap: 8px;
             }
 
             .grid-item {
-                padding: 20px 10px;
-            }
-
-            .store-header h2 {
-                font-size: 2rem;
+                padding: 12px 8px;
             }
 
             .products-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .cart-badge {
-                top: 20px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
+                gap: 15px;
             }
 
             .love-letter-box {
-                padding: 35px 25px;
-            }
-
-            .love-letter-box h2 {
-                font-size: 1.8rem;
+                border-radius: 15px;
             }
 
             .letter-modal-content {
-                padding: 35px 25px;
-            }
-
-            .letter-modal-content h2 {
-                font-size: 2rem;
-            }
-
-            .music-control {
-                bottom: 20px;
-                left: 20px;
-                width: 55px;
-                height: 55px;
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .header p {
-                font-size: 0.95rem;
-            }
-
-            .box {
-                padding: 30px 20px;
-            }
-
-            .box h3 {
-                font-size: 1.4rem;
-            }
-
-            button {
-                padding: 14px 30px;
-                font-size: 1rem;
-            }
-
-            .msg {
-                font-size: 1rem;
-            }
-
-            .glow-orb {
-                filter: blur(30px);
-            }
-
-            .modal-content {
-                padding: 30px 20px;
-            }
-
-            .love-letter-box {
-                padding: 30px 20px;
-            }
-
-            .letter-modal-content {
-                padding: 30px 20px;
-            }
-
-            .full-letter-content {
-                font-size: 0.9rem;
-            }
-
-            .music-control {
-                width: 50px;
-                height: 50px;
-                font-size: 1.1rem;
-            }
-
-            .curiosity-level {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-
-            .curiosity-bar {
-                width: 100%;
-                margin-left: 0;
+                border-radius: 15px;
             }
         }
     </style>
@@ -1050,11 +946,11 @@
     <div class="container">
         <div class="header">
             <h1>For Farzin 💕</h1>
-            <p>A moment to celebrate you, always</p>
+            <p>A moment to celebrate you</p>
         </div>
 
         <div class="box">
-            <h3>✨ Eid is Coming ✨</h3>
+            <h3>✨ Eid Countdown ✨</h3>
             <div class="grid">
                 <div class="grid-item">
                     <span class="num" id="d">00</span>
@@ -1066,18 +962,18 @@
                 </div>
                 <div class="grid-item">
                     <span class="num" id="m">00</span>
-                    <span class="label">Minutes</span>
+                    <span class="label">Mins</span>
                 </div>
                 <div class="grid-item">
                     <span class="num" id="s">00</span>
-                    <span class="label">Seconds</span>
+                    <span class="label">Secs</span>
                 </div>
             </div>
         </div>
 
         <div class="box">
-            <p class="lock-text" id="lock">🔐 Your message unlocks when Eid arrives</p>
-            <button id="btn" class="disabled" style="display: none;">💌 Open Your Message</button>
+            <p class="lock-text" id="lock">🔐 Message unlocks on Eid</p>
+            <button id="btn" class="disabled" style="display: none;">💌 Open Message</button>
 
             <div class="msg" id="msg">
                 <div class="msg-line">Farzin… tum meri zindagi ka sabse khoobsurat hissa ho.</div>
@@ -1092,7 +988,7 @@
         <div class="love-letter-box">
             <h2>💌 A Letter for You 💌</h2>
             <p class="love-letter-preview">A heartfelt message written just for you, Farzin...</p>
-            <button class="read-letter-btn" onclick="openLetter()">📖 Read Full Letter</button>
+            <button class="read-letter-btn" onclick="openLetter()">📖 Read Letter</button>
         </div>
     </div>
 
@@ -1139,7 +1035,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
     <div class="store-section">
         <div class="store-header">
             <h2>💝 Love Store 💝</h2>
-            <p>Shop for memories and moments we share</p>
+            <p>Shop for our precious moments</p>
         </div>
 
         <div class="products-grid">
@@ -1150,14 +1046,12 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 <div class="product-info">
                     <div class="product-title">Loading...</div>
                     <p class="product-desc">The secrets we tell each other under starlight, promises only meant for you.</p>
-                    
                     <div class="curiosity-level">
                         <div class="curiosity-label">🔥 Curiosity</div>
                         <div class="curiosity-bar">
                             <div class="curiosity-fill" style="width: 75%;"></div>
                         </div>
                     </div>
-
                     <button class="add-to-cart-btn" onclick="addToCart(1, 'Product 1')">Add to Cart ❤️</button>
                 </div>
             </div>
@@ -1169,14 +1063,12 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 <div class="product-info">
                     <div class="product-title">Loading...</div>
                     <p class="product-desc">Our hearts are intertwined, our souls connected in ways words could never explain.</p>
-                    
                     <div class="curiosity-level">
                         <div class="curiosity-label">🔥 Curiosity</div>
                         <div class="curiosity-bar">
                             <div class="curiosity-fill" style="width: 85%;"></div>
                         </div>
                     </div>
-
                     <button class="add-to-cart-btn" onclick="addToCart(2, 'Product 2')">Add to Cart ❤️</button>
                 </div>
             </div>
@@ -1188,14 +1080,12 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 <div class="product-info">
                     <div class="product-title">Loading...</div>
                     <p class="product-desc">You're my gravity—the force that keeps me grounded, keeps me whole, keeps me sane.</p>
-                    
                     <div class="curiosity-level">
                         <div class="curiosity-label">🔥 Curiosity</div>
                         <div class="curiosity-bar">
                             <div class="curiosity-fill" style="width: 95%;"></div>
                         </div>
                     </div>
-
                     <button class="add-to-cart-btn" onclick="addToCart(3, 'Product 3')">Add to Cart ❤️</button>
                 </div>
             </div>
@@ -1207,21 +1097,19 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 <div class="product-info">
                     <div class="product-title">Loading...</div>
                     <p class="product-desc">With you, I found my forever—an endless circle of love that never breaks, never bends.</p>
-                    
                     <div class="curiosity-level">
                         <div class="curiosity-label">🔥 Curiosity</div>
                         <div class="curiosity-bar">
                             <div class="curiosity-fill" style="width: 100%;"></div>
                         </div>
                     </div>
-
                     <button class="add-to-cart-btn" onclick="addToCart(4, 'Product 4')">Add to Cart ❤️</button>
                 </div>
             </div>
         </div>
 
         <div class="checkout-section">
-            <h3>Your Collection of Love 💕</h3>
+            <h3>Your Love Collection 💕</h3>
             <p id="cartItems">0 items in your cart</p>
             <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()">Checkout 💌</button>
         </div>
@@ -1230,15 +1118,15 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
     <div class="modal" id="checkoutModal">
         <div class="modal-content">
             <h2>💬 Voice Payment 🎤</h2>
-            <p>Say "I LOVE YOU" or "I LOVE U" to complete your payment</p>
-            <div class="voice-input-display" id="voiceDisplay">Click the button below to start speaking...</div>
-            <button class="voice-mic-btn" id="voiceMicBtn" onclick="toggleVoiceInput()">🎤 Start Voice Input</button>
+            <p>Say "I LOVE YOU" to complete payment</p>
+            <div class="voice-input-display" id="voiceDisplay">Click to start speaking...</div>
+            <button class="voice-mic-btn" id="voiceMicBtn" onclick="toggleVoiceInput()">🎤 Start Voice</button>
             <div class="modal-buttons">
                 <button class="modal-btn modal-cancel" onclick="closeCheckout()">Cancel</button>
             </div>
             <div class="modal-message" id="modalMessage"></div>
             <div class="final-message" id="finalMessage">
-                Farzin, this moment is just the beginning. With every item in this cart, I'm reminding you of how deeply you mean to me. Not in material terms, but in the emotional richness you bring to my life. Happy Eid to the love of my life. 💕
+                Farzin, this moment is just the beginning. With every item in this cart, I'm reminding you of how deeply you mean to me. Happy Eid to the love of my life. 💕
             </div>
         </div>
     </div>
@@ -1262,7 +1150,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
     </audio>
 
     <script>
-        // Speech Recognition API
+        // Speech Recognition
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
         if (SpeechRecognition) {
@@ -1273,26 +1161,29 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         }
 
         let isListening = false;
-        let currentlyPlayingMusic = null; // Track which music is playing
+        let audioState = {
+            timerLooping: false,
+            messageLooping: false
+        };
 
         function toggleVoiceInput() {
             const voiceMicBtn = document.getElementById('voiceMicBtn');
             const voiceDisplay = document.getElementById('voiceDisplay');
 
             if (!recognition) {
-                voiceDisplay.textContent = '❌ Speech Recognition not supported in your browser';
+                voiceDisplay.textContent = '❌ Speech not supported';
                 return;
             }
 
             if (isListening) {
                 recognition.stop();
                 voiceMicBtn.classList.remove('recording');
-                voiceMicBtn.textContent = '🎤 Start Voice Input';
+                voiceMicBtn.textContent = '🎤 Start Voice';
                 isListening = false;
             } else {
                 voiceDisplay.textContent = '🎤 Listening...';
                 voiceMicBtn.classList.add('recording');
-                voiceMicBtn.textContent = '⏹️ Stop Recording';
+                voiceMicBtn.textContent = '⏹️ Stop';
                 isListening = true;
                 recognition.start();
             }
@@ -1302,12 +1193,10 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             recognition.onresult = function(event) {
                 let transcript = '';
                 for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const transcriptSegment = event.results[i][0].transcript;
-                    transcript += transcriptSegment;
+                    transcript += event.results[i][0].transcript;
                 }
 
-                const voiceDisplay = document.getElementById('voiceDisplay');
-                voiceDisplay.textContent = 'You said: "' + transcript + '"';
+                document.getElementById('voiceDisplay').textContent = 'You said: "' + transcript + '"';
 
                 if (event.results[event.results.length - 1].isFinal) {
                     processVoiceInput(transcript);
@@ -1315,16 +1204,13 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             };
 
             recognition.onerror = function(event) {
-                const voiceDisplay = document.getElementById('voiceDisplay');
-                voiceDisplay.textContent = '❌ Error: ' + event.error;
-                console.error('Speech recognition error:', event.error);
+                document.getElementById('voiceDisplay').textContent = '❌ Error: ' + event.error;
             };
 
             recognition.onend = function() {
-                const voiceMicBtn = document.getElementById('voiceMicBtn');
                 if (isListening) {
-                    voiceMicBtn.classList.remove('recording');
-                    voiceMicBtn.textContent = '🎤 Start Voice Input';
+                    document.getElementById('voiceMicBtn').classList.remove('recording');
+                    document.getElementById('voiceMicBtn').textContent = '🎤 Start Voice';
                     isListening = false;
                 }
             };
@@ -1333,28 +1219,14 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         function processVoiceInput(transcript) {
             const messageEl = document.getElementById('modalMessage');
             const voiceDisplay = document.getElementById('voiceDisplay');
-            
             const normalizedTranscript = transcript.toUpperCase().trim();
             
-            const paymentPhrases = [
-                'I LOVE YOU',
-                'ILOVEYOU',
-                'I LOVE U',
-                'ILOVEU',
-                'I LUV YOU',
-                'I LUV U',
-                'ILUVYOU',
-                'ILUVU'
-            ];
+            const paymentPhrases = ['I LOVE YOU', 'ILOVEYOU', 'I LOVE U', 'ILOVEU', 'I LUV YOU', 'I LUV U', 'ILUVYOU', 'ILUVU'];
             
-            const isPaymentValid = paymentPhrases.some(phrase => 
-                normalizedTranscript.includes(phrase)
-            );
-            
-            if (isPaymentValid) {
-                messageEl.textContent = '✓ Transaction Complete ❤️';
+            if (paymentPhrases.some(phrase => normalizedTranscript.includes(phrase))) {
+                messageEl.textContent = '✓ Payment Successful ❤️';
                 messageEl.className = 'modal-message success';
-                voiceDisplay.textContent = '✅ Payment Successful! "I LOVE YOU" detected!';
+                voiceDisplay.textContent = '✅ Success!';
                 playSound('successSound');
                 
                 setTimeout(() => {
@@ -1364,30 +1236,22 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 setTimeout(() => {
                     cart = [];
                     updateCartBadge();
-                    setTimeout(() => {
-                        closeCheckout();
-                    }, 3000);
+                    setTimeout(() => closeCheckout(), 3000);
                 }, 5000);
             } else {
-                messageEl.textContent = "❌ Payment Failed - Say 'I LOVE YOU' or 'I LOVE U' to complete payment";
+                messageEl.textContent = "❌ Say 'I LOVE YOU' to complete";
                 messageEl.className = 'modal-message error';
-                voiceDisplay.textContent = '❌ Payment Failed. Please say "I LOVE YOU" or "I LOVE U"';
+                voiceDisplay.textContent = '❌ Try again';
                 playSound('failSound');
             }
         }
 
-        // RANDOM PRODUCT TITLES SHUFFLE
-        const randomTitles = [
-            "THIS??",
-            "OR MAYBE THIS??",
-            "I THINK THIS!!",
-            "ALSO THIS💕🤍"
-        ];
+        // Product titles
+        const randomTitles = ["THIS??", "OR MAYBE THIS??", "I THINK THIS!!", "ALSO THIS💕🤍"];
 
         function shuffleTitles() {
             const titles = document.querySelectorAll('.product-title');
             let shuffled = [...randomTitles].sort(() => 0.5 - Math.random());
-
             titles.forEach((title, index) => {
                 title.textContent = shuffled[index % shuffled.length];
             });
@@ -1396,16 +1260,13 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         function updateCartButtonNames() {
             const buttons = document.querySelectorAll('.add-to-cart-btn');
             const titles = document.querySelectorAll('.product-title');
-
             buttons.forEach((btn, index) => {
                 const titleText = titles[index].textContent;
-                btn.onclick = function() {
-                    addToCart(index + 1, titleText);
-                };
+                btn.onclick = function() { addToCart(index + 1, titleText); };
             });
         }
 
-        // MUSIC MANAGEMENT
+        // Audio Management - Timer loops, then message loops
         const musicControl = document.getElementById('musicControl');
         const timerMusic = document.getElementById('timerMusic');
         const messageMusic = document.getElementById('messageMusic');
@@ -1413,89 +1274,77 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         timerMusic.volume = 0.4;
         messageMusic.volume = 0.5;
 
-        // Setup audio ended listeners for looping one at a time
         timerMusic.addEventListener('ended', function() {
-            if (currentlyPlayingMusic === 'timer') {
+            if (audioState.timerLooping) {
                 timerMusic.currentTime = 0;
-                timerMusic.play().catch(e => console.log('Timer replay error:', e));
+                timerMusic.play().catch(e => console.log('Timer error:', e));
             }
         });
 
         messageMusic.addEventListener('ended', function() {
-            if (currentlyPlayingMusic === 'message') {
+            if (audioState.messageLooping) {
                 messageMusic.currentTime = 0;
-                messageMusic.play().catch(e => console.log('Message replay error:', e));
+                messageMusic.play().catch(e => console.log('Message error:', e));
             }
         });
 
-        function playMusic(musicType) {
-            // Stop any currently playing music
-            if (currentlyPlayingMusic === 'timer') {
-                timerMusic.pause();
-                timerMusic.currentTime = 0;
-            } else if (currentlyPlayingMusic === 'message') {
-                messageMusic.pause();
-                messageMusic.currentTime = 0;
-            }
+        function playTimerMusic() {
+            timerMusic.pause();
+            messageMusic.pause();
+            audioState.timerLooping = true;
+            audioState.messageLooping = false;
+            
+            timerMusic.currentTime = 0;
+            timerMusic.play().catch(e => console.log('Error:', e));
+            musicControl.classList.remove('playing');
+            musicControl.textContent = '🎵';
+        }
 
-            // Play the requested music
-            if (musicType === 'timer') {
-                currentlyPlayingMusic = 'timer';
-                timerMusic.currentTime = 0;
-                timerMusic.play().catch(e => console.log('Timer play error:', e));
-                musicControl.classList.remove('playing');
-                musicControl.textContent = '🎵';
-            } else if (musicType === 'message') {
-                currentlyPlayingMusic = 'message';
-                messageMusic.currentTime = 0;
-                messageMusic.play().catch(e => console.log('Message play error:', e));
-                musicControl.classList.add('playing');
-                musicControl.textContent = '⏸️';
-            }
+        function playMessageMusic() {
+            timerMusic.pause();
+            messageMusic.pause();
+            audioState.timerLooping = false;
+            audioState.messageLooping = true;
+            
+            messageMusic.currentTime = 0;
+            messageMusic.play().catch(e => console.log('Error:', e));
+            musicControl.classList.add('playing');
+            musicControl.textContent = '⏸️';
         }
 
         function stopAllMusic() {
             timerMusic.pause();
             messageMusic.pause();
-            timerMusic.currentTime = 0;
-            messageMusic.currentTime = 0;
-            currentlyPlayingMusic = null;
+            audioState.timerLooping = false;
+            audioState.messageLooping = false;
             musicControl.classList.remove('playing');
             musicControl.textContent = '🎵';
         }
 
-        // Music control button - toggle message music when clicked
         musicControl.addEventListener('click', function() {
-            if (currentlyPlayingMusic === 'message') {
+            if (audioState.messageLooping) {
                 stopAllMusic();
             } else {
-                playMusic('message');
+                playMessageMusic();
             }
         });
 
-        // Page load - start timer music
         window.addEventListener('load', () => {
             shuffleTitles();
             updateCartButtonNames();
             startCountdown();
             generateHearts();
-            
-            // Start timer music
-            setTimeout(() => {
-                playMusic('timer');
-            }, 500);
+            setTimeout(() => playTimerMusic(), 500);
         });
 
         function openLetter() {
             document.getElementById('letterModal').classList.add('show');
-            // Switch to message music when letter is opened
-            playMusic('message');
+            playMessageMusic();
         }
 
         function closeLetter() {
             document.getElementById('letterModal').classList.remove('show');
-            // Switch back to timer music when letter is closed
-            playMusic('timer');
+            playTimerMusic();
         }
 
         document.getElementById('letterModal').addEventListener('click', function(e) {
@@ -1508,7 +1357,6 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             cart.push({ id, name });
             updateCartBadge();
             playSound('addSound');
-            
             const badge = document.getElementById('cartBadge');
             badge.style.animation = 'none';
             setTimeout(() => {
@@ -1518,16 +1366,16 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
 
         function updateCartBadge() {
             document.getElementById('cartBadge').textContent = cart.length + ' 💕';
-            document.getElementById('cartItems').textContent = cart.length + ' items in your cart';
+            document.getElementById('cartItems').textContent = cart.length + ' items';
         }
 
         function openCheckout() {
             if (cart.length === 0) {
-                alert('Add some memories first! 💕');
+                alert('Add items first! 💕');
                 return;
             }
             document.getElementById('checkoutModal').classList.add('show');
-            document.getElementById('voiceDisplay').textContent = 'Click the button below to start speaking...';
+            document.getElementById('voiceDisplay').textContent = 'Click to start...';
             document.getElementById('modalMessage').textContent = '';
             document.getElementById('modalMessage').className = '';
             document.getElementById('finalMessage').classList.remove('show');
@@ -1537,9 +1385,8 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             document.getElementById('checkoutModal').classList.remove('show');
             if (isListening && recognition) {
                 recognition.stop();
-                const voiceMicBtn = document.getElementById('voiceMicBtn');
-                voiceMicBtn.classList.remove('recording');
-                voiceMicBtn.textContent = '🎤 Start Voice Input';
+                document.getElementById('voiceMicBtn').classList.remove('recording');
+                document.getElementById('voiceMicBtn').textContent = '🎤 Start Voice';
                 isListening = false;
             }
         }
@@ -1548,20 +1395,14 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             const audio = document.getElementById(id);
             if (audio) {
                 audio.currentTime = 0;
-                const playPromise = audio.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.catch(e => console.log('Sound error:', e.message));
-                }
+                audio.play().catch(e => console.log('Error:', e));
             }
         }
 
         function generateHearts() {
-            const particlesContainer = document.getElementById('particles');
-            const heartCount = 20;
+            const container = document.getElementById('particles');
             const hearts = ['❤️', '💕', '💖', '💗', '💝'];
-
-            for (let i = 0; i < heartCount; i++) {
+            for (let i = 0; i < 20; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
@@ -1569,12 +1410,11 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 heart.style.animationDuration = (Math.random() * 6 + 10) + 's';
                 heart.style.animationDelay = Math.random() * 3 + 's';
                 heart.style.fontSize = (Math.random() * 15 + 12) + 'px';
-                particlesContainer.appendChild(heart);
+                container.appendChild(heart);
             }
         }
 
         function startCountdown() {
-            // Eid 2026 in India - March 21, 2026
             const eidDate = new Date('2026-03-21T00:00:00').getTime();
 
             const countdownInterval = setInterval(() => {
@@ -1588,17 +1428,15 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                     document.getElementById('m').textContent = '00';
                     document.getElementById('s').textContent = '00';
                     document.getElementById('lock').style.display = 'none';
+                    
                     const btn = document.getElementById('btn');
                     btn.style.display = 'inline-block';
                     btn.classList.remove('disabled');
                     document.querySelectorAll('.box h3')[0].innerHTML = '🌙 Eid Mubarak, Farzin! 🌙';
-                    
                     document.getElementById('letterSection').classList.add('show');
                     
-                    // Switch to message music on Eid
-                    playMusic('message');
+                    playMessageMusic();
                     document.getElementById('msg').classList.add('show');
-                    
                     return;
                 }
 
@@ -1616,20 +1454,18 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
 
         document.getElementById('btn').addEventListener('click', function() {
             const msgContent = document.getElementById('msg');
-            const isShown = msgContent.classList.contains('show');
-
-            if (!isShown) {
+            if (msgContent.classList.contains('show')) {
+                msgContent.classList.remove('show');
+                this.textContent = '💌 Open Message';
+                playTimerMusic();
+            } else {
                 msgContent.classList.add('show');
                 this.textContent = '💌 Close Message';
-                playMusic('message');
-            } else {
-                msgContent.classList.remove('show');
-                this.textContent = '💌 Open Your Message';
-                playMusic('timer');
+                playMessageMusic();
             }
         });
 
-        console.log('✅ Website ready! Music plays one at a time in loop. Eid date: March 21, 2026 🎵');
+        console.log('✅ Website ready! Eid: March 21, 2026 🎵');
     </script>
 </body>
 </html>
