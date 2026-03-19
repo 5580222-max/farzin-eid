@@ -754,7 +754,7 @@
             font-size: 0.95rem;
         }
 
-        .modal-input {
+        .voice-input-display {
             width: 100%;
             padding: 14px;
             border: 2px solid rgba(212, 134, 138, 0.3);
@@ -762,13 +762,47 @@
             font-size: 1rem;
             font-family: 'Poppins', sans-serif;
             margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            color: #666;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-wrap: break-word;
+        }
+
+        .voice-mic-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #D4868A, #FFB6D9);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(212, 134, 138, 0.3);
             transition: all 0.3s ease;
         }
 
-        .modal-input:focus {
-            outline: none;
-            border-color: #6B4C9A;
-            box-shadow: 0 0 10px rgba(107, 76, 154, 0.3);
+        .voice-mic-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(212, 134, 138, 0.5);
+        }
+
+        .voice-mic-btn.recording {
+            background: linear-gradient(135deg, #FF6B6B, #FF8C8C);
+            animation: pulse-record 1s infinite;
+        }
+
+        @keyframes pulse-record {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .modal-buttons {
@@ -1010,7 +1044,7 @@
     <div class="glow-orb orb2"></div>
     <div class="particles" id="particles"></div>
 
-    <button class="music-control" id="musicControl" title="🎵 Pause Music">🎵</button>
+    <button class="music-control" id="musicControl" title="🎵 Toggle Music">🎵</button>
     <div class="cart-badge" id="cartBadge">0 💕</div>
 
     <div class="container">
@@ -1195,11 +1229,11 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
 
     <div class="modal" id="checkoutModal">
         <div class="modal-content">
-            <h2>Complete Your Love</h2>
-            <p>To unlock this precious moment, express your true feelings:</p>
-            <input type="text" class="modal-input" id="modalInput" placeholder="Type your feeling here...">
+            <h2>💬 Voice Payment 🎤</h2>
+            <p>Say "I LOVE YOU" or "I LOVE U" to complete your payment</p>
+            <div class="voice-input-display" id="voiceDisplay">Click the button below to start speaking...</div>
+            <button class="voice-mic-btn" id="voiceMicBtn" onclick="toggleVoiceInput()">🎤 Start Voice Input</button>
             <div class="modal-buttons">
-                <button class="modal-btn modal-confirm" onclick="validateCheckout()">Submit 💝</button>
                 <button class="modal-btn modal-cancel" onclick="closeCheckout()">Cancel</button>
             </div>
             <div class="modal-message" id="modalMessage"></div>
@@ -1209,25 +1243,139 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         </div>
     </div>
 
-    <audio id="timerMusic" crossorigin="anonymous" preload="auto" autoplay loop>
+    <audio id="timerMusic" preload="auto">
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/timer.mp3" type="audio/mpeg">
     </audio>
 
-    <audio id="messageMusic" crossorigin="anonymous" preload="auto" loop>
+    <audio id="messageMusic" preload="auto">
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/message.mp3" type="audio/mpeg">
     </audio>
 
-    <audio id="addSound">
+    <audio id="addSound" preload="auto">
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/add.mp3" type="audio/mpeg">
     </audio>
-    <audio id="successSound">
+    <audio id="successSound" preload="auto">
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/success.mp3" type="audio/mpeg">
     </audio>
-    <audio id="failSound">
+    <audio id="failSound" preload="auto">
         <source src="https://raw.githubusercontent.com/5580222-max/farzin-eid/main/fail.mp3" type="audio/mpeg">
     </audio>
 
     <script>
+        // Speech Recognition API
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+        }
+
+        let isListening = false;
+        let currentlyPlayingMusic = null; // Track which music is playing
+
+        function toggleVoiceInput() {
+            const voiceMicBtn = document.getElementById('voiceMicBtn');
+            const voiceDisplay = document.getElementById('voiceDisplay');
+
+            if (!recognition) {
+                voiceDisplay.textContent = '❌ Speech Recognition not supported in your browser';
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+                voiceMicBtn.classList.remove('recording');
+                voiceMicBtn.textContent = '🎤 Start Voice Input';
+                isListening = false;
+            } else {
+                voiceDisplay.textContent = '🎤 Listening...';
+                voiceMicBtn.classList.add('recording');
+                voiceMicBtn.textContent = '⏹️ Stop Recording';
+                isListening = true;
+                recognition.start();
+            }
+        }
+
+        if (recognition) {
+            recognition.onresult = function(event) {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcriptSegment = event.results[i][0].transcript;
+                    transcript += transcriptSegment;
+                }
+
+                const voiceDisplay = document.getElementById('voiceDisplay');
+                voiceDisplay.textContent = 'You said: "' + transcript + '"';
+
+                if (event.results[event.results.length - 1].isFinal) {
+                    processVoiceInput(transcript);
+                }
+            };
+
+            recognition.onerror = function(event) {
+                const voiceDisplay = document.getElementById('voiceDisplay');
+                voiceDisplay.textContent = '❌ Error: ' + event.error;
+                console.error('Speech recognition error:', event.error);
+            };
+
+            recognition.onend = function() {
+                const voiceMicBtn = document.getElementById('voiceMicBtn');
+                if (isListening) {
+                    voiceMicBtn.classList.remove('recording');
+                    voiceMicBtn.textContent = '🎤 Start Voice Input';
+                    isListening = false;
+                }
+            };
+        }
+
+        function processVoiceInput(transcript) {
+            const messageEl = document.getElementById('modalMessage');
+            const voiceDisplay = document.getElementById('voiceDisplay');
+            
+            const normalizedTranscript = transcript.toUpperCase().trim();
+            
+            const paymentPhrases = [
+                'I LOVE YOU',
+                'ILOVEYOU',
+                'I LOVE U',
+                'ILOVEU',
+                'I LUV YOU',
+                'I LUV U',
+                'ILUVYOU',
+                'ILUVU'
+            ];
+            
+            const isPaymentValid = paymentPhrases.some(phrase => 
+                normalizedTranscript.includes(phrase)
+            );
+            
+            if (isPaymentValid) {
+                messageEl.textContent = '✓ Transaction Complete ❤️';
+                messageEl.className = 'modal-message success';
+                voiceDisplay.textContent = '✅ Payment Successful! "I LOVE YOU" detected!';
+                playSound('successSound');
+                
+                setTimeout(() => {
+                    document.getElementById('finalMessage').classList.add('show');
+                }, 800);
+
+                setTimeout(() => {
+                    cart = [];
+                    updateCartBadge();
+                    setTimeout(() => {
+                        closeCheckout();
+                    }, 3000);
+                }, 5000);
+            } else {
+                messageEl.textContent = "❌ Payment Failed - Say 'I LOVE YOU' or 'I LOVE U' to complete payment";
+                messageEl.className = 'modal-message error';
+                voiceDisplay.textContent = '❌ Payment Failed. Please say "I LOVE YOU" or "I LOVE U"';
+                playSound('failSound');
+            }
+        }
+
         // RANDOM PRODUCT TITLES SHUFFLE
         const randomTitles = [
             "THIS??",
@@ -1245,7 +1393,6 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             });
         }
 
-        // Update cart button names with shuffled titles
         function updateCartButtonNames() {
             const buttons = document.querySelectorAll('.add-to-cart-btn');
             const titles = document.querySelectorAll('.product-title');
@@ -1258,45 +1405,97 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             });
         }
 
-        // MUSIC CONTROL
+        // MUSIC MANAGEMENT
         const musicControl = document.getElementById('musicControl');
-        const messageMusic = document.getElementById('messageMusic');
         const timerMusic = document.getElementById('timerMusic');
-        let messageMusicPlaying = false;
+        const messageMusic = document.getElementById('messageMusic');
 
+        timerMusic.volume = 0.4;
+        messageMusic.volume = 0.5;
+
+        // Setup audio ended listeners for looping one at a time
+        timerMusic.addEventListener('ended', function() {
+            if (currentlyPlayingMusic === 'timer') {
+                timerMusic.currentTime = 0;
+                timerMusic.play().catch(e => console.log('Timer replay error:', e));
+            }
+        });
+
+        messageMusic.addEventListener('ended', function() {
+            if (currentlyPlayingMusic === 'message') {
+                messageMusic.currentTime = 0;
+                messageMusic.play().catch(e => console.log('Message replay error:', e));
+            }
+        });
+
+        function playMusic(musicType) {
+            // Stop any currently playing music
+            if (currentlyPlayingMusic === 'timer') {
+                timerMusic.pause();
+                timerMusic.currentTime = 0;
+            } else if (currentlyPlayingMusic === 'message') {
+                messageMusic.pause();
+                messageMusic.currentTime = 0;
+            }
+
+            // Play the requested music
+            if (musicType === 'timer') {
+                currentlyPlayingMusic = 'timer';
+                timerMusic.currentTime = 0;
+                timerMusic.play().catch(e => console.log('Timer play error:', e));
+                musicControl.classList.remove('playing');
+                musicControl.textContent = '🎵';
+            } else if (musicType === 'message') {
+                currentlyPlayingMusic = 'message';
+                messageMusic.currentTime = 0;
+                messageMusic.play().catch(e => console.log('Message play error:', e));
+                musicControl.classList.add('playing');
+                musicControl.textContent = '⏸️';
+            }
+        }
+
+        function stopAllMusic() {
+            timerMusic.pause();
+            messageMusic.pause();
+            timerMusic.currentTime = 0;
+            messageMusic.currentTime = 0;
+            currentlyPlayingMusic = null;
+            musicControl.classList.remove('playing');
+            musicControl.textContent = '🎵';
+        }
+
+        // Music control button - toggle message music when clicked
+        musicControl.addEventListener('click', function() {
+            if (currentlyPlayingMusic === 'message') {
+                stopAllMusic();
+            } else {
+                playMusic('message');
+            }
+        });
+
+        // Page load - start timer music
         window.addEventListener('load', () => {
             shuffleTitles();
             updateCartButtonNames();
+            startCountdown();
+            generateHearts();
             
-            timerMusic.volume = 0.5;
-            timerMusic.play().catch(err => {
-                document.addEventListener('click', () => {
-                    timerMusic.play().catch(e => console.log('Timer music error:', e));
-                }, { once: true });
-            });
-        });
-
-        musicControl.addEventListener('click', function() {
-            if (messageMusicPlaying) {
-                messageMusic.pause();
-                musicControl.classList.remove('playing');
-                musicControl.textContent = '🎵';
-                messageMusicPlaying = false;
-            } else {
-                messageMusic.volume = 0.7;
-                messageMusic.play();
-                musicControl.classList.add('playing');
-                musicControl.textContent = '⏸️';
-                messageMusicPlaying = true;
-            }
+            // Start timer music
+            setTimeout(() => {
+                playMusic('timer');
+            }, 500);
         });
 
         function openLetter() {
             document.getElementById('letterModal').classList.add('show');
+            // Switch to message music when letter is opened
+            playMusic('message');
         }
 
         function closeLetter() {
             document.getElementById('letterModal').classList.remove('show');
+            // Switch back to timer music when letter is closed
+            playMusic('timer');
         }
 
         document.getElementById('letterModal').addEventListener('click', function(e) {
@@ -1328,7 +1527,7 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                 return;
             }
             document.getElementById('checkoutModal').classList.add('show');
-            document.getElementById('modalInput').value = '';
+            document.getElementById('voiceDisplay').textContent = 'Click the button below to start speaking...';
             document.getElementById('modalMessage').textContent = '';
             document.getElementById('modalMessage').className = '';
             document.getElementById('finalMessage').classList.remove('show');
@@ -1336,32 +1535,12 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
 
         function closeCheckout() {
             document.getElementById('checkoutModal').classList.remove('show');
-        }
-
-        function validateCheckout() {
-            const input = document.getElementById('modalInput').value.trim();
-            const messageEl = document.getElementById('modalMessage');
-            
-            if (input === 'I LOVE YOU 🤍') {
-                messageEl.textContent = '✓ Transaction Complete ❤️';
-                messageEl.className = 'modal-message success';
-                playSound('successSound');
-                
-                setTimeout(() => {
-                    document.getElementById('finalMessage').classList.add('show');
-                }, 800);
-
-                setTimeout(() => {
-                    cart = [];
-                    updateCartBadge();
-                    setTimeout(() => {
-                        closeCheckout();
-                    }, 3000);
-                }, 5000);
-            } else {
-                messageEl.textContent = "That's not enough… try again 💔";
-                messageEl.className = 'modal-message error';
-                playSound('failSound');
+            if (isListening && recognition) {
+                recognition.stop();
+                const voiceMicBtn = document.getElementById('voiceMicBtn');
+                voiceMicBtn.classList.remove('recording');
+                voiceMicBtn.textContent = '🎤 Start Voice Input';
+                isListening = false;
             }
         }
 
@@ -1369,15 +1548,13 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             const audio = document.getElementById(id);
             if (audio) {
                 audio.currentTime = 0;
-                audio.play().catch(e => console.log('Sound error:', e.name));
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => console.log('Sound error:', e.message));
+                }
             }
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('modalInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') validateCheckout();
-            });
-        });
 
         function generateHearts() {
             const particlesContainer = document.getElementById('particles');
@@ -1397,7 +1574,8 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
         }
 
         function startCountdown() {
-            const eidDate = new Date('2026-03-20T00:00:00').getTime();
+            // Eid 2026 in India - March 21, 2026
+            const eidDate = new Date('2026-03-21T00:00:00').getTime();
 
             const countdownInterval = setInterval(() => {
                 const now = new Date().getTime();
@@ -1417,12 +1595,8 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
                     
                     document.getElementById('letterSection').classList.add('show');
                     
-                    messageMusic.volume = 0.7;
-                    messageMusic.play().catch(err => console.log('Message music error:', err));
-                    musicControl.classList.add('playing');
-                    musicControl.textContent = '⏸️';
-                    messageMusicPlaying = true;
-                    
+                    // Switch to message music on Eid
+                    playMusic('message');
                     document.getElementById('msg').classList.add('show');
                     
                     return;
@@ -1447,26 +1621,15 @@ BYE BYE TAKLI😌❤️🤍💕.</div>
             if (!isShown) {
                 msgContent.classList.add('show');
                 this.textContent = '💌 Close Message';
-                if (!messageMusicPlaying) {
-                    messageMusic.volume = 0.7;
-                    messageMusic.play();
-                    musicControl.classList.add('playing');
-                    musicControl.textContent = '⏸️';
-                    messageMusicPlaying = true;
-                }
+                playMusic('message');
             } else {
                 msgContent.classList.remove('show');
                 this.textContent = '💌 Open Your Message';
-                messageMusic.pause();
-                musicControl.classList.remove('playing');
-                musicControl.textContent = '🎵';
-                messageMusicPlaying = false;
+                playMusic('timer');
             }
         });
 
-        generateHearts();
-        startCountdown();
-        console.log('✅ Website ready! Product titles are randomly shuffled!');
+        console.log('✅ Website ready! Music plays one at a time in loop. Eid date: March 21, 2026 🎵');
     </script>
 </body>
 </html>
